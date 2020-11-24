@@ -1,199 +1,113 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title></title>
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title></title>
 
-        <style>
-            .right {
-                position: absolute;
-                right: 0px;
-                width: 300px;
-                border: 3px solid #73AD21;
-                padding: 10px;
-            }
-            
-            .bt_right{
-                position: flex;
-                float: right;
-                text-align: center;
-                width: 100px;
-            }
-        </style>    
-    </h:head>
-    <h:body>
-        <h:panelGrid columns="2">
-            <h:graphicImage library="img" name="logo.jpg" width="150px"></h:graphicImage>
-            <h3>Sistema para controle de Aluguel de veículos</h3>
-        </h:panelGrid>
-        <h:form>
-            <p:menubar>
-                <p:menuitem value="Home" url="home.xhtml"></p:menuitem>
-                
-                <p:submenu label="Cliente" >
-                    <p:menuitem value="Cadastro" url="cadastroCliente.xhtml" ></p:menuitem>
-                    <p:separator />
-                    <p:menuitem value="Gerenciar Clientes" onclick="PF('dialogGerenciaCliente').show();" ></p:menuitem>
-                </p:submenu>
-                
-                <p:submenu label="Veículo">
-                    <p:menuitem value="Cadastro" url="cadastroVeiculo.xhtml" ></p:menuitem>
-                    <p:separator />
-                    <p:menuitem value="Gerenciar Veiculos" onclick="PF('dialogGerenciaVeiculo').show();" ></p:menuitem>
-                </p:submenu>
-                
-                <p:submenu label="Usuário">
-                    <p:menuitem value="Cadastro" url="cadastroUsuario.xhtml" ></p:menuitem>
-                    <p:separator />
-                    <p:menuitem value="Gerenciar Usuários"  onclick="PF('dialogGerenciaUsuario').show();"> </p:menuitem>
-                </p:submenu>
-                
-                <p:submenu label="Aluguel">                    
-                    <p:menuitem value="Novo" url="cadastroAluguel.xhtml" ></p:menuitem>
-                    <p:separator />
-                    <p:menuitem value="Gerenciar Aluguel"  onclick="PF('dialogGerenciaAluguel').show();" ></p:menuitem>
-                    <p:separator />
-                    <p:menuitem value="Relatorio" url="relatorio.xhtml"></p:menuitem>
-                </p:submenu>                
-                
-                <p:menuitem styleClass="right" value="Desconectar" url="index.xhtml" ></p:menuitem>
-            </p:menubar>
-            
-            <!-- INICIO DA SESSÃO DE DEFINIÇÃO DOS DIALOGS MODAIS -->
-            
-            <!-- MODAL ALUGUEL -->
-            <p:dialog header="Alugueis" widgetVar="dialogGerenciaAluguel" modal="true" height="100" width="70%" resizable="false" draggable="false" >
-                <h:form>
-                    <p:dataTable>                        
-                        <p:column headerText="Cliente">
-                            <h:outputText value=""/>
-                        </p:column>
-                        
-                        <p:column headerText="CPF">
-                            <h:outputText value=""/>
-                        </p:column>
-                        
-                        <p:column headerText="Modelo">
-                            <h:outputText value=""/>
-                        </p:column>
-                        
-                        <p:column headerText="Placa">
-                            <h:outputText value=""/>
-                        </p:column>
-                                                
-                        <p:column headerText="Data Aluguel">
-                            <h:outputText value=""/>
-                        </p:column>                        
-                        
-                        <p:column headerText="Atrasado">
-                            <h:outputText value=""/>
-                        </p:column>                        
-                    </p:dataTable>
-                    <p:commandButton value="Voltar"  onclick="PF('dialogGerenciaAluguel').hide();"></p:commandButton>
-                    <p:commandButton value="Editar" styleClass="bt_right"  type="button"/>                        
-                    <p:commandButton value="Remover" styleClass="bt_right" type="button"/>                    
-                </h:form>
-            </p:dialog>
-            
-            <!-- MODAL CLIENTE -->
-            <p:dialog header="Cliente" widgetVar="dialogGerenciaCliente" modal="true" height="100" width="70%" resizable="false" draggable="false" >
-                <h:form>
-                    <p:dataTable selectionMode="single" >                        
-                        <p:column headerText="Nome">
-                            <h:outputText value=""/>
-                        </p:column>
-                        
-                        <p:column headerText="CPF">
-                            <h:outputText value=""/>
-                        </p:column>
-                        
-                        <p:column headerText="Email">
-                            <h:outputText value=""/>
-                        </p:column>
-                        
-                        <p:column headerText="Telefone">
-                            <h:outputText value=""/>
-                        </p:column>
-                        <p:column headerText="UF">
-                            <h:outputText value=""/>
-                        </p:column>                          
-                    </p:dataTable>
-                    <p:commandButton value="Voltar"  onclick="PF('dialogGerenciaCliente').hide();"></p:commandButton>
-                    <p:commandButton value="Editar" styleClass="bt_right"  type="button"/>                        
-                    <p:commandButton value="Remover" styleClass="bt_right" type="button"/>
-                </h:form>
-            </p:dialog>
-            
-            <!-- MODAL VEICULO -->
-            <p:dialog header="Veiculo" widgetVar="dialogGerenciaVeiculo" modal="true" height="100" width="70%" resizable="false" draggable="false" >
-                <h:form>
-                    <p:dataTable selectionMode="single" >                        
-                        <p:column headerText="Fabricante">
-                            <h:outputText value=""/>
-                        </p:column>
-                        
-                        <p:column headerText="Numero">
-                            <h:outputText value=""/>
-                        </p:column>
-                        
-                        <p:column headerText="Modelo">
-                            <h:outputText value=""/>
-                        </p:column>
-                        
-                        <p:column headerText="Ano">
-                            <h:outputText value=""/>
-                        </p:column>
-                        <p:column headerText="Placa">
-                            <h:outputText value=""/>
-                        </p:column>
-                        <p:column headerText="Nº Portas">
-                            <h:outputText value=""/>
-                        </p:column>
-                        <p:column headerText="Acessórios">
-                            <h:outputText value=""/>
-                        </p:column>
-                    </p:dataTable>
-                    <p:commandButton value="Voltar"  onclick="PF('dialogGerenciaVeiculo').hide();"></p:commandButton>
-                    <p:commandButton value="Editar" styleClass="bt_right"  type="button"/>                        
-                    <p:commandButton value="Remover" styleClass="bt_right" type="button"/>
-                </h:form>
-            </p:dialog>
-            
-            <!-- MODAL Usuário -->
-            <p:dialog header="Usuário" widgetVar="dialogGerenciaUsuario" modal="true" height="100" width="70%" resizable="false" draggable="false" >
-                <h:form>
-                    <p:dataTable value="#{usuarioBean.listaUsuario}" selectionMode="single" var="usuario">                        
-                        <p:column headerText="Nome">
-                            <h:outputText value="#{usuario.nome}"/>
-                        </p:column>
-                        
-                        <p:column headerText="Cargo">
-                            <h:outputText value="#{usuario.cargo}"/>
-                        </p:column>
-                        
-                        <p:column headerText="Email">
-                            <h:outputText value="#{usuario.email}"/>
-                        </p:column>
+	<style>
+.right {
+	position: absolute;
+	right: 0px;
+	width: 300px;
+	border: 3px solid #73AD21;
+	padding: 10px;
+}
 
-                        <p:column headerText="Login">
-                            <h:outputText value="#{usuario.login}"/>
-                        </p:column>
+.bt_right {
+	position: flex;
+	float: right;
+	text-align: center;
+	width: 100px;
+}
+</style>
+</h:head>
+<h:body>
+	<h:panelGrid columns="2">
+		<h:graphicImage library="img" name="logo.jpg" width="150"></h:graphicImage>
+		<h3>Sistema para controle de Aluguel de veículos</h3>
+	</h:panelGrid>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Home" url="home.xhtml"></p:menuitem>
 
-                        <p:column headerText="Senha">
-                            <h:outputText value="#{usuario.senha}"/>
-                        </p:column>
-                                                
-                    </p:dataTable>
-                    <p:commandButton actionListener="#{usuarioBean.listaUsuario}" value="Voltar"  onclick="PF('dialogGerenciaCliente').hide();"/>
-                    <p:commandButton value="Editar" styleClass="bt_right"  type="button"/>                        
-                    <p:commandButton value="Remover" styleClass="bt_right" type="button"/>
-                </h:form>
-            </p:dialog>
-        </h:form>        
-        <ui:insert></ui:insert>
-    </h:body>
+			<p:submenu label="Cliente">
+				<p:menuitem value="Cadastro" url="cadastroCliente.xhtml"></p:menuitem>
+				<p:separator />
+				<p:menuitem value="Gerenciar Clientes"
+					onclick="PF('dialogGerenciaCliente').show();"></p:menuitem>
+			</p:submenu>
+
+			<p:submenu label="Veículo">
+				<p:menuitem value="Cadastro" url="cadastroVeiculo.xhtml"></p:menuitem>
+				<p:separator />
+				<p:menuitem value="Gerenciar Veiculos"
+					onclick="PF('dialogGerenciaVeiculo').show();"></p:menuitem>
+			</p:submenu>
+
+			<p:submenu label="Usuário">
+				<p:menuitem value="Cadastro" url="cadastroUsuario.xhtml"></p:menuitem>
+				<p:separator />
+				<p:menuitem value="Gerenciar Usuários"
+					onclick="PF('dialogGerenciaUsuario').show();">
+				</p:menuitem>
+			</p:submenu>
+
+			<p:submenu label="Aluguel">
+				<p:menuitem value="Novo" url="cadastroAluguel.xhtml"></p:menuitem>
+				<p:separator />
+				<p:menuitem value="Gerenciar Aluguel"
+					onclick="PF('dialogGerenciaAluguel').show();"></p:menuitem>
+				<p:separator />
+				<p:menuitem value="Relatorio" url="relatorio.xhtml"></p:menuitem>
+			</p:submenu>
+
+			<p:menuitem styleClass="right" value="Desconectar" url="index.xhtml"></p:menuitem>
+		</p:menubar>
+	</h:form>
+
+	<ui:insert></ui:insert>
+
+	<h:form>
+		<p:dialog header="Usuários Cadastrados" widgetVar="dialogGerenciaUsuario" height="50%" width="80%"
+			resizable="false" draggable="false" modal="true" >
+
+			<h:form>
+				<p:autoUpdate disabled="false" />
+				<p:dataTable value="#{usuarioBean.usuarios}" var="u">
+					<p:column headerText="Nome">
+						<h:outputText value="#{u.nome}" />
+					</p:column>
+
+					<p:column headerText="Login">
+						<h:outputText value="#{u.login}" />
+					</p:column>
+
+					<p:column headerText="Veículo">
+						<h:outputText value="#{u.senha}" />
+					</p:column>
+
+					<p:column headerText="Cargo">
+						<h:outputText value="#{u.cargo}" />
+					</p:column>
+
+					<p:column headerText="Email">
+						<h:outputText value="#{u.email}" />
+					</p:column>
+
+					<p:column headerText="Ações">
+						<p:commandLink value="Editar" action="#{usuarioBean.editar}">
+							<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{u}"/>
+						</p:commandLink>
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+		</p:dialog>
+	</h:form>
+</h:body>
 </html>
 

@@ -9,6 +9,7 @@
 		<class>br.fvc.pi3.model.Aluguel</class>
 		<class>br.fvc.pi3.model.Cliente</class>
 		<class>br.fvc.pi3.model.Usuario</class>
+		<class>br.fvc.pi3.model.Veiculo</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/bancopi3?useSSL=false&amp;serverTimezone=UTC" />
@@ -16,7 +17,9 @@
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.password" value="ADMIN" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+		<!-- property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" /-->
+		<!-- property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" /-->
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 		</properties>

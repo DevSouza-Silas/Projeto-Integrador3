@@ -22,13 +22,18 @@ public class UsuarioDAO extends JPAutil {
 
 			System.out.println("Salvo com sucesso!");
 			em.close();
-			emf.close();
 
 		} catch (Exception e) {
-			System.out.println("Erro interno ao tentar inserção!");
+			System.out.println("Erro interno ao tentar inserir no banco!");
 		}
 		return usuario;
 
+	}
+
+	
+	public List<Usuario> listaUser() {
+		EntityManager em = JPAutil.getEntityManager();
+		return em.createQuery("select u from Usuario" , Usuario.class).getResultList();
 	}
 	
 	public List<Usuario> lista() {
@@ -37,10 +42,9 @@ public class UsuarioDAO extends JPAutil {
 			EntityManager em = JPAutil.getEntityManager();
 
 			@SuppressWarnings("unchecked")
-			List<Usuario>	listaUsuario = em.createQuery("select u from Usuario u").getResultList();
-				
+			List<Usuario> listaUsuario = em.createQuery("select u from Usuario u").getResultList();
+			System.out.println(listaUsuario);	
 			em.close();
-			emf.close();
 
 			return	listaUsuario;
 

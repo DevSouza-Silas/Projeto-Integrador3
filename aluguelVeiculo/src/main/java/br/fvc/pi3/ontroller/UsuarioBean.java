@@ -5,60 +5,51 @@ import br.fvc.pi3.model.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  * @author Silas Souza
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class UsuarioBean {
 
     private Usuario usuario;
-    private List<Usuario> listaUsuario;
+    private List<Usuario> usuarios;
     private UsuarioDAO usuarioDAO;
-    private boolean editar = false;
+    private String destinoSalvar;
 
     public UsuarioBean() {
          usuario = new Usuario();
-         listaUsuario = new ArrayList<>();
+         usuarios = new ArrayList<Usuario>();
          usuarioDAO = new UsuarioDAO();
     }
 
     public String novo() {
         usuario = new Usuario();
-        this.editar = false;
         return "";
     }
 
     public void excluir() {
-        listaUsuario.remove(usuario);
+    	usuarios.remove(usuario);
     }
 
 
-    public String editar() {
-        editar = true;
-        return "";
-    }
-    
-    public List<Usuario> listar() {
-    	listaUsuario = usuarioDAO.lista();
-    	return listaUsuario;
+    public String getEditar() {
+        return "cadastroUsuario";
     }
     
-
     public void salvarUsuario() {
     	
     	if (this.usuario != null) {
 			
     		this.usuario = usuarioDAO.salvar(this.usuario);
-			this.listaUsuario.add(this.usuario);
-			
-    		novo();
+    		this.usuarios.add(this.usuario);
+    		this.usuario = new Usuario();
     		
 		}else {
 			
-			System.out.println("O obj usu√°rio est√° nulo!");
+			System.out.println("O objeto usu·rio est· nulo!");
 		}
 
       /*  if (editar) {
@@ -76,21 +67,23 @@ public class UsuarioBean {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
-    public List<Usuario> getListaUsuario() {
-        return listaUsuario;
-    }
-
-    public void setListaUsuario(List<Usuario> listaUsuario) {
-        this.listaUsuario = listaUsuario;
-    }
-
-	public boolean isEditar() {
-		return editar;
+    
+   
+	public List<Usuario> getUsuarios() {
+		usuarios = usuarioDAO.lista();
+		return usuarios;
 	}
 
-	public void setEditar(boolean editar) {
-		this.editar = editar;
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+
+	public String getDestinoSalvar() {
+		return destinoSalvar;
+	}
+
+	public void setDestinoSalvar(String destinoSalvar) {
+		this.destinoSalvar = destinoSalvar;
 	}
 	
 }
