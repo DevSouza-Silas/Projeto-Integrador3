@@ -19,7 +19,7 @@
     </h:head>
     <h:body>
         <h:panelGrid columns="2">
-            <h:graphicImage library="img" name="logo.jpg" width="150px"></h:graphicImage>
+            <h:graphicImage library="img" name="logo.jpg" width="150"></h:graphicImage>
             <h3>Sistema para controle de Aluguel de veículos</h3>
         </h:panelGrid>
         <h:form>
@@ -30,15 +30,16 @@
         
         <center>
         <h1>Login</h1>
+         <p:messages autoUpdate="true"/>
         <h:form>
             <h:panelGrid>
                 <h:outputLabel value="Usuário:"/>
-                <p:inputText value=""/>
+                <p:inputText value="#{usuarioBean.usuario.login}"/>
 
                 <h:outputLabel value="Senha:"/>
-                <p:password value=""/>
+                <p:password value="#{usuarioBean.usuario.senha}"/>
 
-                <p:commandButton value="Entrar"/>
+                <p:commandButton value="Entrar" icon="ui-icon-check" action="#{usuarioBean.envia}" ajax="false" />
             </h:panelGrid>
         </h:form>    
     </center>  

@@ -4,6 +4,7 @@ import br.fvc.pi3.model.Usuario;
 import br.fvc.pi3.util.JPAutil;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 /**
  * @author Silas Souza
@@ -64,4 +65,23 @@ public class UsuarioDAO extends JPAutil {
 		em.getTransaction().commit();
 		em.close();
 	}
+	
+    public Usuario getUsuario(String login, String senha) {
+
+        try {
+			EntityManager em = JPAutil.getEntityManager();
+			
+			em.getTransaction().begin();
+          Usuario usuario = (Usuario) em
+           .createQuery(
+               "SELECT u from Usuario u where u.login = :login and u.senha = :senha")
+           .setParameter("login", login)
+           .setParameter("senha", senha).getSingleResult();
+          em.close();
+
+          return usuario;
+        } catch (NoResultException e) {
+              return null;
+        }
+      }
 }
