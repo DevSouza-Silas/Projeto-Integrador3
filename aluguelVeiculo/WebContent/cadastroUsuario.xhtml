@@ -1,11 +1,12 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="template.xhtml"
 	xmlns:p="http://primefaces.org/ui">
 	<h:head>
-		<title>Gerenciamento de Usuário</title>
+		<title>Cadastro de Usuário</title>
 		<style>
 .div_formulario {
 	align-self: center;
@@ -23,34 +24,43 @@
 }
 </style>
 	</h:head>
+	
+	<p:panel header="Cadastro de Usuário">
 	<h:form>
 		<div class="div_formulario">
 			<p:panelGrid columns="4">
+				<p:outputLabel for="txt_id" style="width:100px" value="ID:" />
+				<h:inputText id="txt_id" styleClass="input_spacing" readonly="true"
+					value="#{usuarioBean.usuario.id}" />
+
 				<p:outputLabel for="txt_nome" style="width:100px" value="Nome:" />
-				<p:inputText id="txt_nome" styleClass="input_spacing"
+				<h:inputText id="txt_nome" styleClass="input_spacing"
 					value="#{usuarioBean.usuario.nome}" />
 
 				<p:outputLabel for="txt_login" style="width:100px" value="Login:" />
-				<p:inputText id="txt_login" styleClass="input_spacing"
+				<h:inputText id="txt_login" styleClass="input_spacing"
 					value="#{usuarioBean.usuario.login}" />
 
 				<p:outputLabel for="txt_senha" style="width:100px" value="Senha:" />
-				<p:inputText id="txt_senha" styleClass="input_spacing"
+				<h:inputText id="txt_senha" styleClass="input_spacing"
 					value="#{usuarioBean.usuario.senha}" />
 
 				<p:outputLabel for="txt_cargo" style="width:100px" value="Cargo:" />
-				<p:inputText id="txt_cargo" styleClass="input_spacing"
+				<h:inputText id="txt_cargo" styleClass="input_spacing"
 					value="#{usuarioBean.usuario.cargo}" />
 
 				<p:outputLabel for="txt_email" style="width:100px" value="Email:" />
-				<p:inputText id="txt_email" styleClass="input_spacing"
+				<h:inputText id="txt_email" styleClass="input_spacing"
 					value="#{usuarioBean.usuario.email}" />
 
 				<p:outputLabel style="width:100px" value="" />
 				<p:commandButton action="#{usuarioBean.salvarUsuario}"
-					value="Salvar" style="float: right " />
+					value="Cadastrar" style="float: right " />
+				<p:outputLabel style="width:100px" value="" />
+				<p:commandButton action="#{usuarioBean.novo}" value="Novo" style="float: right " />
 			</p:panelGrid>
 		</div>
 	</h:form>
-	
+	</p:panel>
+
 </ui:decorate>
