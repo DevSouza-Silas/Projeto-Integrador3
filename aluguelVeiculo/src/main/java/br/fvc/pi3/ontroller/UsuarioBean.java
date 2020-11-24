@@ -5,9 +5,12 @@ import br.fvc.pi3.model.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 
 /**
  * @author Silas Souza
@@ -19,6 +22,7 @@ public class UsuarioBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Usuario usuario;
 	private List<Usuario> usuarios;
+	private List<Usuario> listaUsuario;
 	private UsuarioDAO usuarioDAO;
 
 	public UsuarioBean() {
@@ -54,7 +58,7 @@ public class UsuarioBean implements Serializable {
 
 		} else {
 
-			System.out.println("O objeto usuário está nulo!");
+			System.out.println("O objeto usuï¿½rio estï¿½ nulo!");
 		}
 		return null;
 
@@ -65,6 +69,33 @@ public class UsuarioBean implements Serializable {
 		 * listaUsuario.add(usuario); }
 		 */
 	}
+	
+    public String envia() {
+
+        usuario = usuarioDAO.getUsuario(usuario.getLogin(), usuario.getSenha());
+        if (usuario == null) {
+          usuario = new Usuario();
+  		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"UsuÃ¡rio invalido!",null);
+  		FacesContext.getCurrentInstance().addMessage(null, message);
+          return null;
+        } else {
+        	novo();
+              return "/home";
+        }
+
+
+      }
+
+	
+    public List <SelectItem> getListUsuarioo(){
+    	List<SelectItem> list = new ArrayList<SelectItem>();
+    	listaUsuario = usuarioDAO.lista();
+    	
+    	for (Usuario usuario : listaUsuario) {
+			list.add(new SelectItem(usuario, usuario.getNome() ));
+		}
+    	return list;
+    }
 
 	public Usuario getUsuario() {
 		return usuario;

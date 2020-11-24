@@ -4,7 +4,8 @@
              xmlns:h="http://xmlns.jcp.org/jsf/html"
              xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
              template="template.xhtml"
-             xmlns:p="http://primefaces.org/ui">
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Gerenciamento de Alugueis</title>
         <style>
@@ -23,37 +24,43 @@
         </style>
     </h:head>
     <h:body>
+    	<p:panel header="Cadastro de Aluguel">
+		<h:form>
         <div class="div_formulario">
             <p:panelGrid columns="4">
-                <p:outputLabel for="txt_nome_cliente"  style="width:100px" value="Nome:" />
-                <p:inputText id="txt_nome_cliente" styleClass="input_spacing" />            
 
-                <p:outputLabel for="txt_cpf_cliente"  style="width:100px" value="CPF:" />
-                <p:inputText id="txt_cpf_cliente" styleClass="input_spacing" />
+ 				<p:outputLabel for="drop_nome_cliente"  style="width:100px" value="Nome:" />
+                <p:selectOneMenu id="drop_nome_cliente" style="width:210px" value="#{aluguelBean.aluguel.cliente}" >   
+                    <f:selectItems value= "#{usuarioBean.listUsuarioo}"/>                    
+                </p:selectOneMenu>            
 
-                <p:outputLabel for="txt_modelo_veiculo"  style="width:100px" value="Modelo:" />
-                <p:inputText id="txt_modelo_veiculo" styleClass="input_spacing" />
+                <p:outputLabel for="drop_modelo_veiculo"  style="width:100px" value="Modelo:" />
+                <p:selectOneMenu id="drop_modelo_veiculo" style="width:210px" >
+                    <f:selectItem itemLabel="mercedes" itemValue="mercedes" />
+                    <f:selectItem itemLabel="palio" itemValue="palio" />
+                    <f:selectItem itemLabel="gol" itemValue="gol" />                 
+                </p:selectOneMenu>                                
+ 				
+                <p:outputLabel for="txt_data_aluguel"  style="width:100px" value="Data Inicio:" />
+                <p:inputMask id="txt_data_aluguel" styleClass="input_spacing" value="#{aluguelBean.aluguel.dataAluguel}" mask="99/99/9999"/>
 
-                <p:outputLabel for="txt_ano_veiculo"  style="width:100px" value="Ano:" />
-                <p:inputText id="txt_ano_veiculo" styleClass="input_spacing" />
-
-                <p:outputLabel for="txt_telefone_cliente" style="width:100px" value="Telefone:" />
-                <p:inputText id="txt_telefone_cliente" styleClass="input_spacing" />
-
-                <p:outputLabel for="txt_data_aluguel"  style="width:100px" value="Aluguel:" />
-                <p:inputText id="txt_data_aluguel" styleClass="input_spacing" />
-
-                <p:outputLabel for="txt_data_entrega"  style="width:100px" value="Entrega:" />
-                <p:inputText id="txt_data_entrega" styleClass="input_spacing" />  
+                <p:outputLabel for="txt_data_entrega"  style="width:100px" value="Data Entrega:" />
+                <p:inputMask id="txt_data_entrega" styleClass="input_spacing" value="#{aluguelBean.aluguel.dataEntrega}" mask="99/99/9999"/>
+                  
                 
                 <p:outputLabel for="txt_valor"  style="width:100px" value="Valor:" />
-                <p:inputText id="txt_valor" styleClass="input_spacing" />
+                <p:inputText id="txt_valor" styleClass="input_spacing" value="#{aluguelBean.aluguel.valorPago}" />
+                
+                <p:outputLabel for="txt_observacao"  style="width:100px" value="Observação:" />
+                <p:inputText id="txt_observacao" styleClass="input_spacing" value="#{aluguelBean.aluguel.observacao}" />
                 
                 <p:outputLabel  style="width:100px" value="" />
                 <p:outputLabel  style="width:100px" value="" />
                 <p:outputLabel  style="width:100px" value="" />
-                <p:commandButton value="Salvar" style="float: right "/>
+                <p:commandButton action="#{aluguelBean.salvarAluguel}" value="Salvar" style="float: right "/>
             </p:panelGrid> 
         </div>
+     </h:form>
+	</p:panel>
     </h:body>
 </ui:decorate>
