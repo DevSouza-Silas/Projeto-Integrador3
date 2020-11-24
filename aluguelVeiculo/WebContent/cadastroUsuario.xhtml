@@ -42,8 +42,8 @@
 					value="#{usuarioBean.usuario.login}" />
 
 				<p:outputLabel for="txt_senha" style="width:100px" value="Senha:" />
-				<h:inputText id="txt_senha" styleClass="input_spacing"
-					value="#{usuarioBean.usuario.senha}" />
+				<p:password id="txt_senha" styleClass="input_spacing"
+					value="#{usuarioBean.usuario.senha}" required="true"/>
 
 				<p:outputLabel for="txt_cargo" style="width:100px" value="Cargo:" />
 				<h:inputText id="txt_cargo" styleClass="input_spacing"

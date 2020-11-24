@@ -24,13 +24,13 @@
         </style>
     </h:head>
     <h:body>
-    	<p:panel header="Cadastro de Uluguel">
+    	<p:panel header="Cadastro de Aluguel">
 		<h:form>
         <div class="div_formulario">
             <p:panelGrid columns="4">
 
  				<p:outputLabel for="drop_nome_cliente"  style="width:100px" value="Nome:" />
-                <p:selectOneMenu id="drop_nome_cliente" style="width:210px"  >   
+                <p:selectOneMenu id="drop_nome_cliente" style="width:210px" value="#{aluguelBean.aluguel.cliente}" >   
                     <f:selectItems value= "#{usuarioBean.listUsuarioo}"/>                    
                 </p:selectOneMenu>            
 
@@ -42,10 +42,11 @@
                 </p:selectOneMenu>                                
  				
                 <p:outputLabel for="txt_data_aluguel"  style="width:100px" value="Data Inicio:" />
-                <p:inputText id="txt_data_aluguel" styleClass="input_spacing" value="#{aluguelBean.aluguel.dataAluguel}"/>
+                <p:inputMask id="txt_data_aluguel" styleClass="input_spacing" value="#{aluguelBean.aluguel.dataAluguel}" mask="99/99/9999"/>
 
                 <p:outputLabel for="txt_data_entrega"  style="width:100px" value="Data Entrega:" />
-                <p:inputText id="txt_data_entrega" styleClass="input_spacing" value="#{aluguelBean.aluguel.dataEntrega}"/>  
+                <p:inputMask id="txt_data_entrega" styleClass="input_spacing" value="#{aluguelBean.aluguel.dataEntrega}" mask="99/99/9999"/>
+                  
                 
                 <p:outputLabel for="txt_valor"  style="width:100px" value="Valor:" />
                 <p:inputText id="txt_valor" styleClass="input_spacing" value="#{aluguelBean.aluguel.valorPago}" />
