@@ -1,4 +1,4 @@
-package br.fvc.pi3.ontroller;
+package br.fvc.pi3.controller;
 
 import br.fvc.pi3.dao.AluguelDAO;
 import br.fvc.pi3.model.Aluguel;

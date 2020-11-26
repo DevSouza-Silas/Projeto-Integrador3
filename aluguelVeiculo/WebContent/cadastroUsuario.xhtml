@@ -29,9 +29,6 @@
 	<h:form>
 		<div class="div_formulario">
 			<p:panelGrid columns="4">
-				<p:outputLabel for="txt_id" style="width:100px" value="ID:" />
-				<h:inputText id="txt_id" styleClass="input_spacing" readonly="true"
-					value="#{usuarioBean.usuario.id}" />
 
 				<p:outputLabel for="txt_nome" style="width:100px" value="Nome:" />
 				<h:inputText id="txt_nome" styleClass="input_spacing"
@@ -52,12 +49,9 @@
 				<p:outputLabel for="txt_email" style="width:100px" value="Email:" />
 				<h:inputText id="txt_email" styleClass="input_spacing"
 					value="#{usuarioBean.usuario.email}" />
-
-				<p:outputLabel style="width:100px" value="" />
-				<p:commandButton action="#{usuarioBean.salvarUsuario}"
-					value="Cadastrar" style="float: right " />
-				<p:outputLabel style="width:100px" value="" />
-				<p:commandButton action="#{usuarioBean.novo}" value="Novo" style="float: right " />
+					
+				<p:outputLabel for="txt_email" style="width:100px" value="" />
+				<p:commandButton action="#{usuarioBean.salvar}"	value="Cadastrar" style="float: right " />
 			</p:panelGrid>
 		</div>
 	</h:form>

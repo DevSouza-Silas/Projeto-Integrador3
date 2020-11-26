@@ -1,11 +1,9 @@
 package br.fvc.pi3.dao;
 
+import java.util.List;
+import javax.persistence.EntityManager;
 import br.fvc.pi3.model.Aluguel;
 import br.fvc.pi3.util.JPAutil;
-
-import java.util.List;
-
-import javax.persistence.EntityManager;
 
 public class AluguelDAO {
 	

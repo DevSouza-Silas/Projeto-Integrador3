@@ -6,7 +6,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="template.xhtml"
 	xmlns:p="http://primefaces.org/ui">
 	<h:head>
-		<title>Gerenciamento de Usuário</title>
+		<title>Gerenciamento de Cliente</title>
 		<style>
 .div_formulario {
 	align-self: center;
@@ -25,44 +25,48 @@
 </style>
 	</h:head>
 
-	<p:panel header="Gerenciamento de Usuários">
+	<p:panel header="Gerenciamento de cliente">
 		<h:form>
 			<p:autoUpdate />
-			<p:dataTable value="#{usuarioBean.usuarios}" var="usuario">
+			<p:dataTable value="#{clienteBean.listaCliente}" var="c">
 				<p:column headerText="ID">
-					<h:outputText value="#{usuario.id}" />
+					<h:outputText value="#{c.id}" />
 				</p:column>
 
 				<p:column headerText="Nome">
-					<h:outputText value="#{usuario.nome}" />
+					<h:outputText value="#{c.cpf}" />
 				</p:column>
 
-				<p:column headerText="Login">
-					<h:outputText value="#{usuario.login}" />
+				<p:column headerText="Nome cliente">
+					<h:outputText value="#{c.nomecliente}" />
 				</p:column>
 
-				<p:column headerText="Veículo">
-					<h:outputText value="#{usuario.senha}" />
-				</p:column>
-
-				<p:column headerText="Cargo">
-					<h:outputText value="#{usuario.cargo}" />
+				<p:column headerText="Endereço">
+					<h:outputText value="#{c.endereco}" />
 				</p:column>
 
 				<p:column headerText="Email">
-					<h:outputText value="#{usuario.email}" />
+					<h:outputText value="#{c.email}" />
+				</p:column>
+
+				<p:column headerText="UF">
+					<h:outputText value="#{c.uf}" />
+				</p:column>
+
+				<p:column headerText="Telefone">
+					<h:outputText value="#{c.telefone}" />
 				</p:column>
 
 				<p:column headerText="Ações">
-					<p:commandLink value="Editar" action="#{usuarioBean.editar}">
-						<f:setPropertyActionListener target="#{usuarioBean.usuario}"
-							value="#{usuario}" />
+					<p:commandLink style="btn" value="Editar" action="#{clienteBean.editar}">
+						<f:setPropertyActionListener target="#{clienteBean.cliente}"
+							value="#{c}" />
 					</p:commandLink>
 					
-					<p:commandButton value="Excluir" action="#{usuarioBean.remover}"
+					<p:commandButton value="Excluir" action="#{clienteBean.remover}"
 						title="Excluir">
-						<f:setPropertyActionListener target="#{usuarioBean.usuario}"
-							value="#{usuario}" />
+						<f:setPropertyActionListener target="#{clienteBean.cliente}"
+							value="#{c.salvar}" />
 					</p:commandButton>
 				</p:column>
 

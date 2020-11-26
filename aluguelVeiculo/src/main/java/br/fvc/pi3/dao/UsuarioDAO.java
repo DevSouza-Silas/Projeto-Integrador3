@@ -11,13 +11,13 @@ import javax.persistence.NoResultException;
  */
 public class UsuarioDAO extends JPAutil {
 
-	public Usuario salvar(Usuario usuario) {
+	public Usuario inserir(Usuario usuario) {
 
 		try {
 			EntityManager em = JPAutil.getEntityManager();
 
 			em.getTransaction().begin();
-			em.merge(usuario);
+			em.persist(usuario);
 			em.getTransaction().commit();
 
 			System.out.println("Salvo com sucesso!");
@@ -29,8 +29,7 @@ public class UsuarioDAO extends JPAutil {
 		return usuario;
 	}
 
-
-	public List<Usuario> lista() {
+	public List<Usuario> listar() {
 
 		try {
 			EntityManager em = JPAutil.getEntityManager();
@@ -43,45 +42,45 @@ public class UsuarioDAO extends JPAutil {
 			return listaUsuario;
 
 		} catch (Exception e) {
-			System.out.println("Erro interno ao tentar inserÃ§Ã£o! Log: " + e);
+			System.out.println("Erro interno ao tentar inserção! Log: " + e);
 		}
 		return null;
 	}
 
-	public Usuario updateMerge(Usuario usuario) {
-		
+	public Usuario update(Usuario usuario) {
+
 		EntityManager em = JPAutil.getEntityManager();
 		em.getTransaction().begin();
-		Usuario entidadeSalva = em.merge(usuario); // O Merge, salva ou atualiza.
+		Usuario entidadeSalva = em.merge(usuario); 
 		em.getTransaction().commit();
 
 		return entidadeSalva;
 	}
 	
-	public void delete(Usuario usuario){
+	public void delete(Usuario usuario) {
+		
 		EntityManager em = JPAutil.getEntityManager();
 		em.getTransaction().begin();
-		em.remove(usuario);
+		em.remove(em.getReference(Usuario.class, usuario.getId()));
 		em.getTransaction().commit();
 		em.close();
 	}
 	
-    public Usuario getUsuario(String login, String senha) {
+	
+	public Usuario getUsuario(String login, String senha) {
 
-        try {
+		try {
 			EntityManager em = JPAutil.getEntityManager();
-			
-			em.getTransaction().begin();
-          Usuario usuario = (Usuario) em
-           .createQuery(
-               "SELECT u from Usuario u where u.login = :login and u.senha = :senha")
-           .setParameter("login", login)
-           .setParameter("senha", senha).getSingleResult();
-          em.close();
 
-          return usuario;
-        } catch (NoResultException e) {
-              return null;
-        }
-      }
+			em.getTransaction().begin();
+			Usuario usuario = (Usuario) em
+					.createQuery("SELECT u from Usuario u where u.login = :login and u.senha = :senha")
+					.setParameter("login", login).setParameter("senha", senha).getSingleResult();
+			em.close();
+
+			return usuario;
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 }

@@ -37,8 +37,7 @@
 			<p:submenu label="Cliente">
 				<p:menuitem value="Cadastro" url="cadastroCliente.xhtml"></p:menuitem>
 				<p:separator />
-				<p:menuitem value="Gerenciar Clientes"
-					onclick="PF('dialogGerenciaCliente').show();"></p:menuitem>
+				<p:menuitem value="Gerenciar Clientes" url="gerenciarCliente.xhtml"></p:menuitem>
 			</p:submenu>
 
 			<p:submenu label="Veículo">
@@ -52,10 +51,6 @@
 				<p:menuitem value="Cadastro" url="cadastroUsuario.xhtml"></p:menuitem>
 				<p:separator />
 				<p:menuitem value="Gerenciar Usuários" url="gerenciarUsuario.xhtml"></p:menuitem>
-				<p:separator />
-				<p:menuitem value="Gerenciar Usuários"
-					onclick="PF('dialogGerenciaUsuario').show();">
-				</p:menuitem>
 			</p:submenu>
 
 			<p:submenu label="Aluguel">
@@ -73,43 +68,7 @@
 
 	<ui:insert></ui:insert>
 
-	<h:form>
-		<p:dialog header="Usuários Cadastrados" widgetVar="dialogGerenciaUsuario" height="50%" width="80%"
-			resizable="false" draggable="false" modal="true" >
-
-			<h:form>
-				<p:autoUpdate disabled="false" />
-				<p:dataTable value="#{usuarioBean.usuarios}" var="u">
-					<p:column headerText="Nome">
-						<h:outputText value="#{u.nome}" />
-					</p:column>
-
-					<p:column headerText="Login">
-						<h:outputText value="#{u.login}" />
-					</p:column>
-
-					<p:column headerText="Veículo">
-						<h:outputText value="#{u.senha}" />
-					</p:column>
-
-					<p:column headerText="Cargo">
-						<h:outputText value="#{u.cargo}" />
-					</p:column>
-
-					<p:column headerText="Email">
-						<h:outputText value="#{u.email}" />
-					</p:column>
-
-					<p:column headerText="Ações">
-						<p:commandLink value="Editar" action="#{usuarioBean.editar}">
-							<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{u}"/>
-						</p:commandLink>
-					</p:column>
-
-				</p:dataTable>
-			</h:form>
-		</p:dialog>
-	</h:form>
+	
 </h:body>
 </html>
 

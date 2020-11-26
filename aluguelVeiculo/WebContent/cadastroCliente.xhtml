@@ -24,28 +24,28 @@
         </style>
     </h:head>
     <h:body>
+    	<h:form>
         <div class="div_formulario">
             <p:panelGrid columns="4">
                 <p:outputLabel for="txt_nome"  style="width:100px" value="Nome:" />
-                <p:inputText id="txt_nome" styleClass="input_spacing" />            
+                <p:inputText value="#{clienteBean.cliente.nomecliente}" id="txt_nome" styleClass="input_spacing" />            
 
                 <p:outputLabel for="txt_cpf"  style="width:100px" value="CPF:" />
-                 <p:inputMask id="txt_cpf" styleClass="input_spacing"  mask="999.999.999-99"/>
+                <p:inputMask value="#{clienteBean.cliente.cpf}" id="txt_cpf" styleClass="input_spacing"  mask="999.999.999-99"/>
                 
-
                 <p:outputLabel for="txt_email"  style="width:100px" value="Email:" />
-                <p:inputText id="txt_email" styleClass="input_spacing" />
+                <p:inputText value="#{clienteBean.cliente.email}" id="txt_email" styleClass="input_spacing" />
 
                 <p:outputLabel for="txt_telefone" style="width:100px" value="Telefone:" />
-                <p:inputText id="txt_telefone" styleClass="input_spacing" />
+                <p:inputText value="#{clienteBean.cliente.telefone}" id="txt_telefone" styleClass="input_spacing" />
 
                 <p:outputLabel for="txt_endereço"  style="width:100px" value="Endereço:" />
-                <p:inputText id="txt_endereço" styleClass="input_spacing" />
+                <p:inputText value="#{clienteBean.cliente.endereco}" id="txt_endereço" styleClass="input_spacing" />
 
                 <p:outputLabel for="drop_uf" style="width:100px" value="UF:" />
                 <p:selectOneMenu id="drop_uf" style="width:210px" >
-                    <f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true"/>
-                    <f:selectItem itemLabel="AC" itemValue="AC" />
+                    <f:selectItem itemLabel="Selecione"  noSelectionOption="true"/>
+                    <f:selectItem itemLabel="AC" itemValue="#{clienteBean.cliente.uf}" />
                     <f:selectItem itemLabel="AL" itemValue="AL" />
                     <f:selectItem itemLabel="AP" itemValue="AP" />
                     <f:selectItem itemLabel="AM" itemValue="AM" />
@@ -76,8 +76,9 @@
                 <p:outputLabel  style="width:100px" value="" />
                 <p:outputLabel  style="width:100px" value="" />
                 <p:outputLabel  style="width:100px" value="" />
-                <p:commandButton value="Salvar" style="float: right "/>
+                <p:commandButton action="#{clienteBean.salvar}" value="Salvar" style="float: right "/>
             </p:panelGrid> 
         </div>
+        </h:form>
     </h:body> 
 </ui:decorate>
