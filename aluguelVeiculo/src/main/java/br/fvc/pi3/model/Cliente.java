@@ -1,123 +1,130 @@
 package br.fvc.pi3.model;
 
-import java.io.Serializable;
-import java.util.Objects;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.OneToMany;
 
 @Entity
-@Table(name = "cliente")
-public class Cliente implements Serializable {
-/**
- * @author Silas Souza
- */
-	private static final long serialVersionUID = 1L;
+public class Cliente {
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String cpf;
-    private String nomecliente;
-    private String endereco;
-    private String email;
-    private String uf;
-    private String telefone;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	private String nome;
+	private String sobrenome;
+	private String email;
+	private String cpf;
+	private String endereco;
+	private String uf;
+	private int idade;
+	
 
-    public Cliente() {
-    }
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<Aluguel> listaAluguel;
+	
+	
 
-    public Cliente(Long id, String cpf, String nomecliente, String endereco, String email, String uf, String telefone) {
-        this.id = id;
-        this.cpf = cpf;
-        this.nomecliente = nomecliente;
-        this.endereco = endereco;
-        this.email = email;
-        this.uf = uf;
-        this.telefone = telefone;
-    }
+	public List<Aluguel> getListaAluguel() {
+		return listaAluguel;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setListaAluguel(List<Aluguel> listaAluguel) {
+		this.listaAluguel = listaAluguel;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setIdade(int idade) {
+		this.idade = idade;
+	}
 
-    public String getCpf() {
-        return cpf;
-    }
+	public int getIdade() {
+		return idade;
+	}
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getNomecliente() {
-        return nomecliente;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setNomecliente(String nomecliente) {
-        this.nomecliente = nomecliente;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public String getEndereco() {
-        return endereco;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
+	public String getSobrenome() {
+		return sobrenome;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getUf() {
-        return uf;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setUf(String uf) {
-        this.uf = uf;
-    }
+	public String getCpf() {
+		return cpf;
+	}
 
-    public String getTelefone() {
-        return telefone;
-    }
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
+	public String getEndereco() {
+		return endereco;
+	}
 
-    
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.id);
-        return hash;
-    }
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Cliente other = (Cliente) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
-    }
-    
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cliente other = (Cliente) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
 }

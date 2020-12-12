@@ -1,66 +1,99 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:decorate xmlns="http://www.w3.org/1999/xhtml"
-             xmlns:h="http://xmlns.jcp.org/jsf/html"
-             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-             template="template.xhtml"
-             xmlns:p="http://primefaces.org/ui"
-             xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        <title>Gerenciamento de Alugueis</title>
-        <style>
-            .div_formulario{
-                align-self: center;
-                margin-top: 3rem;
-                margin-left: 3rem;
-            }
-            .ui-panelgrid>*>td,.ui-panelgrid .ui-panelgrid-cell {
-                border: none;
-            }
-            .input_spacing{
-                margin-top: 5px;
-                margin-bottom: 5px;
-            }
-        </style>
-    </h:head>
-    <h:body>
-    	<p:panel header="Cadastro de Aluguel">
-		<h:form>
-        <div class="div_formulario">
-            <p:panelGrid columns="4">
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="template.xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
- 				<p:outputLabel for="drop_nome_cliente"  style="width:100px" value="Nome:" />
-                <p:selectOneMenu id="drop_nome_cliente" style="width:210px" value="#{aluguelBean.aluguel.cliente}" >   
-                    <f:selectItems value= "#{usuarioBean.listUsuarioo}"/>                    
-                </p:selectOneMenu>            
+	<p:panel header="Registro de Locação do veículo">
+		<h:form id="formulario">
+			<p:growl id="growl" />
 
-                <p:outputLabel for="drop_modelo_veiculo"  style="width:100px" value="Modelo:" />
-                <p:selectOneMenu id="drop_modelo_veiculo" style="width:210px" >
-                    <f:selectItem itemLabel="mercedes" itemValue="mercedes" />
-                    <f:selectItem itemLabel="palio" itemValue="palio" />
-                    <f:selectItem itemLabel="gol" itemValue="gol" />                 
-                </p:selectOneMenu>                                
- 				
-                <p:outputLabel for="txt_data_aluguel"  style="width:100px" value="Data Inicio:" />
-                <p:inputMask id="txt_data_aluguel" styleClass="input_spacing" value="#{aluguelBean.aluguel.dataAluguel}" mask="99/99/9999"/>
+			<h:panelGrid columns="2">
 
-                <p:outputLabel for="txt_data_entrega"  style="width:100px" value="Data Entrega:" />
-                <p:inputMask id="txt_data_entrega" styleClass="input_spacing" value="#{aluguelBean.aluguel.dataEntrega}" mask="99/99/9999"/>
-                  
-                
-                <p:outputLabel for="txt_valor"  style="width:100px" value="Valor:" />
-                <p:inputText id="txt_valor" styleClass="input_spacing" value="#{aluguelBean.aluguel.valorPago}" />
-                
-                <p:outputLabel for="txt_observacao"  style="width:100px" value="Observação:" />
-                <p:inputText id="txt_observacao" styleClass="input_spacing" value="#{aluguelBean.aluguel.observacao}" />
-                
-                <p:outputLabel  style="width:100px" value="" />
-                <p:outputLabel  style="width:100px" value="" />
-                <p:outputLabel  style="width:100px" value="" />
-                <p:commandButton action="#{aluguelBean.salvarAluguel}" value="Salvar" style="float: right "/>
-            </p:panelGrid> 
-        </div>
-     </h:form>
+				<p:outputLabel>ID: </p:outputLabel>
+				<p:outputLabel value="#{aluguelBean.aluguel.usuario.id}" />
+
+				<p:outputLabel>Cliente: </p:outputLabel>
+				<p:outputLabel value="#{aluguelBean.aluguel.cliente.nome}" />
+
+				<p:outputLabel>Atendente:</p:outputLabel>
+				<p:selectOneMenu value="#{aluguelBean.aluguel.usuario.nome}"
+					effect="fold" editable="true">
+					<f:selectItem itemLabel="Select One" itemValue="" />
+					<f:selectItems value="#{aluguelBean.aluguel.usuario.listaAluguel}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel>Placa Veículo:</p:outputLabel>
+				<p:inputText value="#{aluguelBean.aluguel.veiculo.placa}"
+					required="true" requiredMessage="Placa veículo obrigatório" />
+
+
+			</h:panelGrid>
+			<br />
+			<br />
+
+			<p:commandButton value="Salvar" action="#{aluguelBean.salvar}"
+				ajax="false"></p:commandButton>
+
+		</h:form>
 	</p:panel>
-    </h:body>
+
+	<p:panel header="Locações Realizadas">
+		<h:form id="formAluguel">
+			<p:dataTable value="#{aluguelBean.cliente.listaAluguel}"
+				var="aluguel" id="tabelaAluguel">
+
+				<p:column style="width:150px;">
+					<f:facet name="header">Cód Loca</f:facet>
+					<h:outputText value="#{aluguel.id}" />
+				</p:column>
+				<p:column style="width:150px;">
+					<f:facet name="header">Cód cliente</f:facet>
+					<h:outputText value="#{aluguel.cliente.id}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">Cliente</f:facet>
+					<h:outputText value="#{aluguel.cliente.nome}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">Atendente</f:facet>
+					<h:outputText value="#{aluguel.usuario.nome}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">Placa Veículo</f:facet>
+					<h:outputText value="#{aluguel.veiculo.placa}" />
+				</p:column>
+
+
+				<p:column headerText="Editar">
+					<h:commandLink immediate="true" id="botaoEditar">
+						<f:setPropertyActionListener value="#{aluguel}"
+							target="#{aluguelBean.aluguel}" />
+						<f:ajax execute="botaoEditar" render=":formulario" />
+						<h:graphicImage url="resources/img/editar.png" width="25"
+							height="25" />
+					</h:commandLink>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">Delete</f:facet>
+					<h:commandLink immediate="true"
+						action="#{aluguelBean.removeAluguel}" id="botaoremover">
+						<h:graphicImage url="resources/img/delete_97403.jpg" width="25"
+							height="25" />
+						<f:setPropertyActionListener value="#{aluguel}"
+							target="#{aluguelBean.aluguel}" />
+						<f:ajax execute="botaoremover" render="@form :formulario" />
+					</h:commandLink>
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</p:panel>
+
 </ui:decorate>

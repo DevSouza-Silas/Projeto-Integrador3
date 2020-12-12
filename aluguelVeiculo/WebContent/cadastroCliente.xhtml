@@ -1,84 +1,108 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:decorate xmlns="http://www.w3.org/1999/xhtml"
-             xmlns:h="http://xmlns.jcp.org/jsf/html"
-             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-             template="template.xhtml"
-             xmlns:p="http://primefaces.org/ui"
-             xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>
-        <title>Gerenciamento de Clientes</title>
-        <style>
-            .div_formulario{
-                align-self: center;
-                margin-top: 3rem;
-                margin-left: 3rem;
-            }
-            .ui-panelgrid>*>td,.ui-panelgrid .ui-panelgrid-cell {
-                border: none;
-            }
-            .input_spacing{
-                margin-top: 5px;
-                margin-bottom: 5px;
-            }
-        </style>
-    </h:head>
-    <h:body>
-    	<h:form>
-        <div class="div_formulario">
-            <p:panelGrid columns="4">
-                <p:outputLabel for="txt_nome"  style="width:100px" value="Nome:" />
-                <p:inputText value="#{clienteBean.cliente.nomecliente}" id="txt_nome" styleClass="input_spacing" />            
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="template.xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
-                <p:outputLabel for="txt_cpf"  style="width:100px" value="CPF:" />
-                <p:inputMask value="#{clienteBean.cliente.cpf}" id="txt_cpf" styleClass="input_spacing"  mask="999.999.999-99"/>
-                
-                <p:outputLabel for="txt_email"  style="width:100px" value="Email:" />
-                <p:inputText value="#{clienteBean.cliente.email}" id="txt_email" styleClass="input_spacing" />
+	<p:panel header="Cadastro de Cliente">
+	<h:form id="formulario">
+		<p:growl id="growl" /> 
+		<p:panelGrid columns="4">
+			
+			<p:outputLabel>Nome:</p:outputLabel>
+			<p:inputText value="#{clienteBean.cliente.nome}"
+				required="true" requiredMessage="Informe o nome!" />
 
-                <p:outputLabel for="txt_telefone" style="width:100px" value="Telefone:" />
-                <p:inputText value="#{clienteBean.cliente.telefone}" id="txt_telefone" styleClass="input_spacing" />
+			<p:outputLabel>Sobrenome:</p:outputLabel>
+			<p:inputText
+				value="#{clienteBean.cliente.sobrenome}"
+				required="true" requiredMessage="Informe o sobrenome!" />
 
-                <p:outputLabel for="txt_endereço"  style="width:100px" value="Endereço:" />
-                <p:inputText value="#{clienteBean.cliente.endereco}" id="txt_endereço" styleClass="input_spacing" />
 
-                <p:outputLabel for="drop_uf" style="width:100px" value="UF:" />
-                <p:selectOneMenu id="drop_uf" style="width:210px" >
-                    <f:selectItem itemLabel="Selecione"  noSelectionOption="true"/>
-                    <f:selectItem itemLabel="AC" itemValue="#{clienteBean.cliente.uf}" />
-                    <f:selectItem itemLabel="AL" itemValue="AL" />
-                    <f:selectItem itemLabel="AP" itemValue="AP" />
-                    <f:selectItem itemLabel="AM" itemValue="AM" />
-                    <f:selectItem itemLabel="BA" itemValue="BA" />
-                    <f:selectItem itemLabel="CE" itemValue="CE" />
-                    <f:selectItem itemLabel="DF" itemValue="DF" />
-                    <f:selectItem itemLabel="ES" itemValue="ES" />
-                    <f:selectItem itemLabel="GO" itemValue="GO" />
-                    <f:selectItem itemLabel="MA" itemValue="MA" />
-                    <f:selectItem itemLabel="MT" itemValue="MT" />
-                    <f:selectItem itemLabel="MS" itemValue="MS" />
-                    <f:selectItem itemLabel="MG" itemValue="MG" />
-                    <f:selectItem itemLabel="PA" itemValue="PA" />
-                    <f:selectItem itemLabel="PB" itemValue="PB" />
-                    <f:selectItem itemLabel="PR" itemValue="PR" />
-                    <f:selectItem itemLabel="PE" itemValue="PE" />
-                    <f:selectItem itemLabel="PI" itemValue="PI" />
-                    <f:selectItem itemLabel="RJ" itemValue="RJ" />
-                    <f:selectItem itemLabel="RN" itemValue="RN" />
-                    <f:selectItem itemLabel="RS" itemValue="RS" />
-                    <f:selectItem itemLabel="RO" itemValue="RO" />
-                    <f:selectItem itemLabel="RR" itemValue="RR" />
-                    <f:selectItem itemLabel="SC" itemValue="SC" />
-                    <f:selectItem itemLabel="SP" itemValue="SP" />
-                    <f:selectItem itemLabel="SE" itemValue="SE" />
-                    <f:selectItem itemLabel="TO" itemValue="TO" />
-                </p:selectOneMenu>  
-                <p:outputLabel  style="width:100px" value="" />
-                <p:outputLabel  style="width:100px" value="" />
-                <p:outputLabel  style="width:100px" value="" />
-                <p:commandButton action="#{clienteBean.salvar}" value="Salvar" style="float: right "/>
-            </p:panelGrid> 
-        </div>
-        </h:form>
-    </h:body> 
+			<p:outputLabel>Email:</p:outputLabel>
+			<p:inputText value="#{clienteBean.cliente.email}" 
+				required="true" requiredMessage="Informe o email!" />
+			
+			<p:outputLabel for="idade" required="true" value="cpf:"/>
+			<p:inputText  id="idade"  value="#{clienteBean.cliente.cpf}"
+				required="true" requiredMessage="Informe o cpf!" />
+
+			<p:outputLabel for="dd" required="true" value="End:"/>
+			<p:inputText  id="dd"  value="#{clienteBean.cliente.endereco}"
+				required="true" requiredMessage="Informe o endereço!" />
+			
+			<p:outputLabel>UF:</p:outputLabel>
+			<p:selectOneMenu
+				value="#{clienteBean.cliente.uf}">
+				<f:selectItem itemValue="BA" itemLabel="BA" />
+				<f:selectItem itemValue="RJ" itemLabel="RJ" />
+				<f:selectItem itemValue="SP" itemLabel="SP" />
+			</p:selectOneMenu>
+
+		</p:panelGrid>
+		<br />
+		<p:commandButton value="Salvar" ajax="false"
+			action="#{clienteBean.salvar}" />
+
+		<p:commandButton value="Cancelar" immediate="true"
+				action="#{clienteBean.novo}">
+				<f:ajax execute="@this" render="@form" />
+		</p:commandButton>
+	</h:form>
+	</p:panel>
+	
+	<p:panel header="Clientes cadastrados">
+	<h:form id="formtable">
+		<p:dataTable value="#{clienteBean.list}" var="user">
+			<p:column headerText="ID">
+				<h:outputText value="#{user.id}" />
+			</p:column>
+
+			<p:column headerText="Nome">
+				<h:outputText value="#{user.nome}" />
+			</p:column>
+
+			<p:column headerText="Sobrenome">
+				<h:outputText value="#{user.sobrenome}" />
+			</p:column>
+
+			<p:column headerText="cpf">
+				<h:outputText value="#{user.cpf}" />
+			</p:column>
+
+			<p:column headerText="Editar">
+				<h:commandLink immediate="true" id="botaoEditar">
+					<f:setPropertyActionListener value="#{user}"
+						target="#{clienteBean.cliente}" />
+					<f:ajax execute="botaoEditar" render=":formulario" />
+					<h:graphicImage url="resources/img/circle-edit-icon.png" width="25"
+						height="25" />
+				</h:commandLink>
+			</p:column>
+
+			<p:column headerText="Remover">
+				<h:commandLink id="botaoremover"
+					action="#{clienteBean.remover}"> 
+					<f:setPropertyActionListener value="#{user}"
+						target="#{clienteBean.cliente}" />
+					<h:graphicImage url="resources/img/circle-delete-icon.png" width="25"
+						height="25" />
+					<f:ajax execute="botaoremover" render="@form :formulario" />	
+				</h:commandLink>
+			</p:column>
+
+			<p:column headerText="Locar">
+				<h:commandLink immediate="true" action="cadastroAluguel" id="botaoAluguel">
+					<h:graphicImage url="resources/img/locacao-icon.png" width="25"
+						height="25" />
+					<f:param name="codigoCli" value="#{user.id}" />
+				</h:commandLink>
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+	</p:panel>
+
 </ui:decorate>

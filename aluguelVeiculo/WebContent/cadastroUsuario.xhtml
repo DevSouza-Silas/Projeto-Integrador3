@@ -1,60 +1,96 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:decorate xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="template.xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-	<h:head>
-		<title>Cadastro de Usuário</title>
-		<style>
-.div_formulario {
-	align-self: center;
-	margin-top: 3rem;
-	margin-left: 3rem;
-}
 
-.ui-panelgrid>*>td, .ui-panelgrid .ui-panelgrid-cell {
-	border: none;
-}
-
-.input_spacing {
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-</style>
-	</h:head>
 	
-	<p:panel header="Cadastro de Usuário">
-	<h:form>
-		<div class="div_formulario">
-			<p:panelGrid columns="4">
+		<p:panel header="Cadastro de Usuário">
+			<h:form id="formulario">
+				<p:growl id="growl" />
+				<p:panelGrid columns="4">
 
-				<p:outputLabel for="txt_nome" style="width:100px" value="Nome:" />
-				<h:inputText id="txt_nome" styleClass="input_spacing"
-					value="#{usuarioBean.usuario.nome}" />
+					<p:outputLabel>Nome:</p:outputLabel>
+					<p:inputText value="#{usuarioBean.usuario.nome}" required="true"
+						requiredMessage="Informe o nome!" />
 
-				<p:outputLabel for="txt_login" style="width:100px" value="Login:" />
-				<h:inputText id="txt_login" styleClass="input_spacing"
-					value="#{usuarioBean.usuario.login}" />
+					<p:outputLabel>Cargo:</p:outputLabel>
+					<p:inputText value="#{usuarioBean.usuario.cargo}" required="true"
+						requiredMessage="Informe o cargo" />
 
-				<p:outputLabel for="txt_senha" style="width:100px" value="Senha:" />
-				<p:password id="txt_senha" styleClass="input_spacing"
-					value="#{usuarioBean.usuario.senha}" required="true"/>
 
-				<p:outputLabel for="txt_cargo" style="width:100px" value="Cargo:" />
-				<h:inputText id="txt_cargo" styleClass="input_spacing"
-					value="#{usuarioBean.usuario.cargo}" />
+					<p:outputLabel>Email:</p:outputLabel>
+					<p:inputText value="#{usuarioBean.usuario.email}" required="true"
+						requiredMessage="Informe o email!" />
 
-				<p:outputLabel for="txt_email" style="width:100px" value="Email:" />
-				<h:inputText id="txt_email" styleClass="input_spacing"
-					value="#{usuarioBean.usuario.email}" />
-					
-				<p:outputLabel for="txt_email" style="width:100px" value="" />
-				<p:commandButton action="#{usuarioBean.salvar}"	value="Cadastrar" style="float: right " />
-			</p:panelGrid>
-		</div>
-	</h:form>
-	</p:panel>
+					<p:outputLabel for="login" required="true" value="login:" />
+					<p:inputText id="login" value="#{usuarioBean.usuario.login}"
+						required="true" requiredMessage="Informe a login!" />
+
+					<p:outputLabel>Sexo:</p:outputLabel>
+					<p:selectOneMenu value="#{usuarioBean.usuario.sexo}">
+						<f:selectItem itemValue="MASCULINO" itemLabel="Masculino" />
+						<f:selectItem itemValue="FEMININO" itemLabel="Feminino" />
+					</p:selectOneMenu>
+
+					<p:outputLabel>Senha:</p:outputLabel>
+					<p:password value="#{usuarioBean.usuario.senha}" required="true"
+						requiredMessage="Informe a senha!" />
+				</p:panelGrid>
+				<br />
+				<p:commandButton value="Salvar" ajax="false"
+					action="#{usuarioBean.salvar}" />
+
+				<p:commandButton value="Cancelar" immediate="true"
+					action="#{usuarioBean.novo}">
+					<f:ajax execute="@this" render="@form" />
+				</p:commandButton>
+			</h:form>
+		</p:panel>
+
+		<p:panel header="Usuários cadastrados">
+			<h:form id="formtable">
+				<p:dataTable value="#{usuarioBean.list}" var="user">
+					<p:column headerText="ID">
+						<h:outputText value="#{user.id}" />
+					</p:column>
+
+					<p:column headerText="Nome">
+						<h:outputText value="#{user.nome}" />
+					</p:column>
+
+					<p:column headerText="Sobrenome">
+						<h:outputText value="#{user.cargo}" />
+					</p:column>
+
+					<p:column headerText="Login">
+						<h:outputText value="#{user.login}" />
+					</p:column>
+
+					<p:column headerText="Editar">
+						<h:commandLink immediate="true" id="botaoEditar">
+							<f:setPropertyActionListener value="#{user}"
+								target="#{usuarioBean.usuario}" />
+							<f:ajax execute="botaoEditar" render=":formulario" />
+							<h:graphicImage url="resources/img/circle-edit-icon.png"
+								width="25" height="25" />
+						</h:commandLink>
+					</p:column>
+
+					<p:column headerText="Remover">
+						<h:commandLink id="botaoremover" action="#{usuarioBean.remover}">
+							<f:setPropertyActionListener value="#{user}"
+								target="#{usuarioBean.usuario}" />
+							<h:graphicImage url="resources/img/circle-delete-icon.png"
+								width="25" height="25" />
+							<f:ajax execute="botaoremover" render="@form :formulario" />
+						</h:commandLink>
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+		</p:panel>
 
 </ui:decorate>

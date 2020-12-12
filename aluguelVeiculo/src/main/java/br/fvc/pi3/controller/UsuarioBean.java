@@ -1,93 +1,78 @@
 package br.fvc.pi3.controller;
 
-import br.fvc.pi3.dao.UsuarioDAO;
+import br.fvc.pi3.dao.UsuarioDao;
 import br.fvc.pi3.model.Usuario;
-import java.io.Serializable;
+import br.fvc.pi3.model.Veiculo;
+
 import java.util.ArrayList;
 import java.util.List;
-
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.ChartSeries;
 
 /**
  * @author Silas Souza
  */
 @ManagedBean
 @ViewScoped
-public class UsuarioBean implements Serializable {
+public class UsuarioBean {
 
-	private static final long serialVersionUID = 1L;
-	private Usuario usuario;
-	private List<Usuario> usuarios;
-	private List<Usuario> listaUsuario;
-	private UsuarioDAO usuarioDAO;
+	private Usuario usuario = new Usuario();
+	private List<Usuario> list = new ArrayList<Usuario>();
+	private UsuarioDao<Usuario> daoGeneric = new UsuarioDao<Usuario>();
+	private BarChartModel barCharModel = new BarChartModel();
 
-	public UsuarioBean() {
-		usuario = new Usuario();
-		usuarios = new ArrayList<Usuario>();
-		usuarioDAO = new UsuarioDAO();
+	@PostConstruct
+	public void init() {
+		list = daoGeneric.listar(Usuario.class);
+	}
+
+	public BarChartModel getBarCharModel() {
+		return barCharModel;
+	}
+
+	public String salvar() {
+		this.usuario = daoGeneric.updateMerge(this.usuario);
+		this.novo();
+		this.getList();
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage("Usuário salvo com sucesso!"));
+		return "";
+	}
+	
+	public String editar() {
+		this.usuario = daoGeneric.pesquisar(this.usuario.getId(), Usuario.class);
+		return "primefaces";
 	}
 
 	public String novo() {
 		this.usuario = new Usuario();
-		this.usuarios.clear();
 		return "";
 	}
 
-	public String remover() {
-		usuarioDAO.delete(usuario);
-		this.getUsuarios();
+	
+	public String remover() throws Exception {
+
+		daoGeneric.removerUsario(this.usuario);
+		this.novo();
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage("Usuário removido com sucesso!"));
+
 		return "";
 	}
 
-	public String editar() {
-
-		this.usuario = usuarioDAO.update(usuario);
-
-		return "cadastroUsuario";
-	}
-
-	public void salvar() {
-
-		if (this.usuario != null) {
-
-			usuarioDAO.inserir(this.usuario);
-			this.novo();
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário cadastrado com sucesso!", null);
-			FacesContext.getCurrentInstance().addMessage(null, message);
-		} else {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Usuário está nulo!", null);
-			FacesContext.getCurrentInstance().addMessage(null, message);
-			System.out.println("");
-		}
-	}
-
-	public String getEnviar() {
-
-		usuario = usuarioDAO.getUsuario(usuario.getLogin(), usuario.getSenha());
-		if (usuario == null) {
-			usuario = new Usuario();
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário inválido!", null);
-			FacesContext.getCurrentInstance().addMessage(null, message);
-			return null;
-		} else {
-			novo();
-			return "/home";
-		}
-
-	}
-
-	public List<SelectItem> getListUsuarioo() {
-		List<SelectItem> list = new ArrayList<SelectItem>();
-		listaUsuario = usuarioDAO.listar();
-
-		for (Usuario usuario : listaUsuario) {
-			list.add(new SelectItem(usuario, usuario.getNome()));
-		}
+	public List<Usuario> getList() {
+		list = daoGeneric.listar(Usuario.class);
 		return list;
+	}
+	
+	public void setList(List<Usuario> list) {
+		this.list = list;
 	}
 
 	public Usuario getUsuario() {
@@ -96,15 +81,6 @@ public class UsuarioBean implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}
-
-	public List<Usuario> getUsuarios() {
-		usuarios = usuarioDAO.listar();
-		return usuarios;
-	}
-
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
 	}
 
 }

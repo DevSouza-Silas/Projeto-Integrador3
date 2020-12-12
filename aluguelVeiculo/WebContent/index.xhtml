@@ -30,16 +30,16 @@
         
         <center>
         <h1>Login</h1>
-         <p:messages autoUpdate="true"/>
+        <p:growl id="growl" />
         <h:form>
             <h:panelGrid>
                 <h:outputLabel value="Usuário:"/>
-                <p:inputText value="#{usuarioBean.usuario.login}"/>
+                <p:inputText value="#{autenticacaoBean.usuario.login}"/>
 
                 <h:outputLabel value="Senha:"/>
-                <p:password value="#{usuarioBean.usuario.senha}"/>
+                <p:password value="#{autenticacaoBean.usuario.senha}"/>
 
-                <p:commandButton value="Entrar" icon="ui-icon-check" action="#{usuarioBean.enviar}" />
+                <p:commandButton value="Entrar" icon="ui-icon-check" action="#{autenticacaoBean.logarSistema}" ajax="false" />
             </h:panelGrid>
         </h:form>    
     </center>  

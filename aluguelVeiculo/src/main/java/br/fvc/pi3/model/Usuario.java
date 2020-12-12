@@ -1,33 +1,43 @@
 package br.fvc.pi3.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import br.fvc.pi3.model.Aluguel;
 
 @Entity
-@Table(name = "tb_usuario")
+@Table(name = "usuario")
 public class Usuario implements Serializable {
+
+	private static final long serialVersionUID = 8879017312151040475L;
 /**
  * @author Silas Souza
  */
-	private static final long serialVersionUID = 1L;
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String nome;
     private String cargo;
     private String email;
     private String login;
     private String senha;
+    private String sexo;
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<Aluguel> listaAluguel;
+	
 
     public Usuario() {
     }
     
-    public Usuario(Integer id, String nome, String cargo, String email, String login, String senha) {
+    public Usuario(Long id, String nome, String cargo, String email, String login, String senha) {
         this.id = id;
         this.nome = nome;
         this.cargo = cargo;
@@ -36,11 +46,11 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-    public Integer getId() {
+    public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -84,13 +94,31 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-    @Override
+    
+	
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+
+	public List<Aluguel> getListaAluguel() {
+		return listaAluguel;
+	}
+
+	public void setListaAluguel(List<Aluguel> listaAluguel) {
+		this.listaAluguel = listaAluguel;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 3;
         hash = 17 * hash + Objects.hashCode(this.id);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

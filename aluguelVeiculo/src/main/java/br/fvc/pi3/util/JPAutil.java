@@ -29,4 +29,8 @@ public class JPAutil {
 		return  emf.createEntityManager();
 	}
 	
+	public static Object getPrimaryKey(Object entity) { // Retorna a primay key
+		return emf.getPersistenceUnitUtil().getIdentifier(entity);
+	}
+
 }

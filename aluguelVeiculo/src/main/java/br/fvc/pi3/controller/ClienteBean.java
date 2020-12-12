@@ -2,61 +2,26 @@ package br.fvc.pi3.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import br.fvc.pi3.dao.ClienteDao;
+
 import br.fvc.pi3.model.Cliente;
+import br.fvc.pi3.dao.ClienteDao;
 
 @ManagedBean
 @ViewScoped
 public class ClienteBean {
-	
-	private static final long serialVersionUID = 1L;
-	private Cliente cliente;
-	private List<Cliente> listaCliente;
-	private ClienteDao clienteDAO;
 
-	public ClienteBean() {
-		cliente = new Cliente();
-		listaCliente = new ArrayList<Cliente>();
-		clienteDAO = new ClienteDao();
-	}
+	private Cliente cliente = new Cliente();
+	private List<Cliente> list = new ArrayList<Cliente>();
+	private ClienteDao<Cliente> daoGeneric = new ClienteDao<Cliente>();
 
-	public String novo() {
-		this.cliente = new Cliente();
-		this.listaCliente.clear();
-		return "";
-	}
-   
-	public String remover() {
-		
-		clienteDAO.delete(cliente);
-		return "";
-	}
-
-	public String editar() {
-
-		this.cliente = clienteDAO.update(cliente);
-
-		return "cadastroUsuario";
-	}
-
-	public String salvar() {
-
-		if (this.cliente != null) {
-			
-			clienteDAO.inserir(cliente);			
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário cadastrado com sucesso!", null);
-			FacesContext.getCurrentInstance().addMessage(null, message);
-		} else {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Usuário está nulo!", null);
-			FacesContext.getCurrentInstance().addMessage(null, message);
-			System.out.println("");
-		}
-		
-		return null;
+	public  ClienteBean() {
+		list = daoGeneric.listar(Cliente.class);
 	}
 
 	public Cliente getCliente() {
@@ -67,17 +32,38 @@ public class ClienteBean {
 		this.cliente = cliente;
 	}
 
-	public List<Cliente> getListaCliente() {
-		return listaCliente;
+	public String salvar() {
+		this.cliente = daoGeneric.updateMerge(cliente);
+		this.novo();
+		this.getList();
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage("Cliente salvo com sucesso!"));
+		return "";
+	}
+	
+	public String editar() {
+		this.cliente = daoGeneric.pesquisar(this.cliente.getId(), Cliente.class);
+		return "cadastroCliente";
 	}
 
-	public void setListaCliente(List<Cliente> listaCliente) {
-		this.listaCliente = listaCliente;
+	public String novo() {
+		cliente = new Cliente();
+		return "";
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public List<Cliente> getList() {
+		list = daoGeneric.listar(Cliente.class);
+		return list;
 	}
-		
 
+	public String remover() throws Exception {
+
+		daoGeneric.removerCliente(cliente);
+		this.novo();
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage("Cliente removido com sucesso!"));
+
+		return "";
+	}
 }
